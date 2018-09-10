@@ -21,31 +21,30 @@ twig : gmo.twig
     *//javascript token
 
 ##初期設定
-`    public function __construct($conf)
-    {
-        $this->SiteID        =  $conf['SiteID'];      
-        $this->SitePass      =  $conf['SitePass'];
-        $this->ShopID        =  $conf['ShopID'];
-        $this->ShopPass      =  $conf['ShopPass'];
-        $this->EntryTran     =  $conf['EntryTran'];
-        $this->ExecTran      =  $conf['ExecTran'];
-        $this->AlterTran     =  $conf['AlterTran'];
-        $this->TdVerify      =  $conf['TdVerify'];
-        $this->ChangeTran    =  $conf['ChangeTran'];
-        $this->SaveCard      =  $conf['SaveCard'];
-        $this->DeleteCard    =  $conf['DeleteCard'];
-        $this->SearchCard    =  $conf['SearchCard'];
-        $this->TradedCard    =  $conf['TradedCard'];
-        $this->SaveMember    =  $conf['SaveMember'];
-        $this->DeleteMember  =  $conf['DeleteMember'];
-        $this->SearchMember  =  $conf['SearchMember'];
-        $this->UpdateMember  =  $conf['UpdateMember'];
-        $this->SearchTrade   =  $conf['SearchTrade'];
-    }
-`
+`    public function __construct($conf)`
+`    {`
+`        $this->SiteID        =  $conf['SiteID'];      `
+`        $this->SitePass      =  $conf['SitePass'];`
+`        $this->ShopID        =  $conf['ShopID'];`
+`        $this->ShopPass      =  $conf['ShopPass'];`
+`        $this->EntryTran     =  $conf['EntryTran'];`
+`        $this->ExecTran      =  $conf['ExecTran'];`
+`        $this->AlterTran     =  $conf['AlterTran'];`
+`        $this->TdVerify      =  $conf['TdVerify'];`
+`        $this->ChangeTran    =  $conf['ChangeTran'];`
+`        $this->SaveCard      =  $conf['SaveCard'];`
+`        $this->DeleteCard    =  $conf['DeleteCard'];`
+`        $this->SearchCard    =  $conf['SearchCard'];`
+`        $this->TradedCard    =  $conf['TradedCard'];`
+`        $this->SaveMember    =  $conf['SaveMember'];`
+`        $this->DeleteMember  =  $conf['DeleteMember'];`
+`        $this->SearchMember  =  $conf['SearchMember'];`
+`        $this->UpdateMember  =  $conf['UpdateMember'];`
+`        $this->SearchTrade   =  $conf['SearchTrade'];`
+`    }`
 
 ## Licence
 [MIT](https://github.com/tcnksm/tool/blob/master/LICENCE)
 
 ## Author
-[tcnksm](https://github.com/camelG)
+[camelG](https://github.com/camelG)
