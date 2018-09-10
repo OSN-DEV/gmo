@@ -19,7 +19,7 @@ php : Gmo.php
 twig : gmo.twig  
     *//javascript token  
   
-##初期設定  
+## 初期設定  
     public function __construct($conf)  
     {  
         $this->SiteID        =  $conf['SiteID'];  
