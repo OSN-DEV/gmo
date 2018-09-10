@@ -1,0 +1,137 @@
+{{ include('/entry/header.twig') }}
+<script src="https://pt01.mul-pay.jp/ext/js/token.js" ></script>
+{# <script src="https://p01.mul-pay.jp/ext/js/token.js" ></script> #}
+
+<section>
+	<ol class="cd-breadcrumb triangle">
+	<li class="current"><a href="#0">決済情報変更・登録</a></li>
+	<li><em>完了</em></li>
+		</ol>	
+<div class="container">
+	<h2 class="my-3">決済情報登録・変更</h2>
+
+<form class="form-horizontal" id="getTokenForm" method="POST">
+    <fieldset>
+    <div class="form-group">
+      <label for="cardno" class="col-md-12 control-label">カード番号<span class="badge badge-danger ml-2">必須</span></label>
+      <div class="col-md-12">
+        <input type="number" value="" class="form-control cc-number alphabet" name="cardno" id="cardno" pattern="[\d\s]{13,19}" x-autocompletetype="cc-number" data-numeric="" required="">
+        <span class="help-block"><span class="label label-default">例</span>0123456789012345</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="cc-holder" class="col-md-12 control-label">カード名義人<span class="badge badge-danger ml-2">必須</span></label>
+      <div class="col-md-12">
+        <input type="text" value="" class="form-control cc-holder alphabet" name="holdername" x-autocompletetype="cc-full-name" id="holdername" pattern="[A-Z]+\s[A-Z]+" required="">
+        <span class="help-block"><span class="label label-default">例</span>TARO YAMADA</span>
+        <span class="help-block">英字大文字で姓名の間にはスペースを入れてください</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="cc-exp" class="col-md-12 control-label">有効期限<span class="badge badge-danger ml-2">必須</span></label>
+      <div class="col-md-12">
+        <input type="text" value="" class="form-control cc-exp alphabet  col-sm-1" name="expire_month" id="expire_month" pattern="[0-1][0-9]" data-numeric="" x-autocompletetype="cc-exp" placeholder="月" required="" maxlength="2">
+        /<input type="text" value="" class="form-control cc-exp alphabet col-sm-1" name="expire_year" id="expire_year" pattern="[1-9][0-9]" data-numeric="" x-autocompletetype="cc-exp" placeholder="年" required="" maxlength="2">
+        <span class="help-block"><span class="label label-default">例</span>05 / 21（月 / 年）</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="cc-csc" class="col-md-12 control-label">セキュリティコード<span class="badge badge-danger ml-2">必須</span></label>
+      <div class="col-md-12">
+        <input type="number" value="" class="form-control cc-csc alphabet" name="securitycode" id="securitycode" pattern="\d{3,4}" placeholder="110" data-numeric="" required="" maxlength="4">
+        <span class="help-block">カードの裏面にある数桁の数字です</span>
+      </div>
+    </div>
+	
+    <div class="col-md-12" id="buttons">
+		<ul id="permission">
+			<li><button type="button" onClick="history.back()" class="btn btn-success btn-lg">キャンセル</button></li>
+			<li><button type="button" class="btn btn-success btn-lg"  onclick="doPurchase()">入力内容確認する</button></li>
+		</ul>
+    </div>
+	</fieldset>	
+	</form>
+
+<form id="purchaseForm" action="/entry/credit_Changeconfirmation" method="post">
+<input type="hidden" value="" id="token" name="token" />
+</form>
+</div>
+<!-- InstanceEndEditable -->
+</section>
+
+
+<script type="text/javascript">
+var Multipayment,CryptoJS,JSEncryptExports,JSEncrypt,ASN1,Base64,Hex,KJUR;
+function execPurchase(response) {
+
+  var tokenError = {
+          '000':'トークン取得正常終了',
+          '100':'カード番号必須チェックエラー',
+          '101':'カード番号フォーマットエラー(数字以外を含む)',
+          '102':'カード番号フォーマットエラー(10-16 桁の範囲外)',
+          '110':'有効期限必須チェックエラー',
+          '111':'有効期限フォーマットエラー(数字以外を含む)',
+          '112':'有効期限フォーマットエラー(6 又は 4 桁以外)',
+          '113':'有効期限フォーマットエラー(月が 13 以上)',
+          '121':'セキュリティコードフォーマットエラー(数字以外を含む)',
+          '122':'セキュリティコード桁数エラー',
+          '131':'名義人フォーマットエラー(半角英数字、一部の記号以外を含む)',
+          '132':'名義人フォーマットエラー(51 桁以上)',
+          '141':'発行数フォーマットエラー(数字以外を含む)',
+          '142':'発行数フォーマットエラー(1-10 の範囲外)',
+          '150':'カード情報を暗号化した情報必須チェックエラー',
+          '160':'ショップ ID 必須チェックエラー',
+          '161':'ショップ ID フォーマットエラー(14 桁以上)',
+          '162':'ショップ ID フォーマットエラー(半角英数字以外)',
+          '170':'公開鍵ハッシュ値必須チェックエラー',
+          '180':'ショップ ID または公開鍵ハッシュ値がマスターに存在しない',
+          '190':'カード情報(Encrypted)が復号できない',
+          '191':'カード情報(Encrypted)復号化後フォーマットエラー',
+          '501':'トークン用パラメータ(id)が送信されていない',
+          '502':'トークン用パラメータ(id)がマスターに存在しない',
+          '511':'トークン用パラメータ(cardInfo)が送信されていない',
+          '512':'トークン用パラメータ(cardInfo)が復号できない',
+          '521':'トークン用パラメータ(key)が送信されていない',
+          '522':'トークン用パラメータ(key)が復号できない',
+          '531':'トークン用パラメータ(callBack)が送信されていない',
+          '541':'トークン用パラメータ(hash)が存在しない',
+          '551':'トークン用 apikey が存在しない ID',
+          '552':'トークン用 apikey が有効ではない',
+          '901':'マルチペイメント内部のシステムエラー',
+          '902':'処理が混み合っている'
+  }
+    if (response.resultCode == "000") {
+      
+        $("#token").val(response.tokenObject.token);
+        $("#purchaseForm").submit();
+
+    }else if(response.resultCode in tokenError){
+      alert(tokenError[response.resultCode]);
+    }else{
+      alert('エラー発生しました。');
+    }
+}
+
+function doPurchase() {
+    var cardno, expire, securitycode, holdername;
+    var cardno = document.getElementById("cardno").value;
+    var expire = document.getElementById("expire_year").value + document.getElementById("expire_month").value;
+    var securitycode = document.getElementById("securitycode").value;
+    var holdername = document.getElementById("holdername").value;
+    var tokennumber = 1;
+
+    Multipayment.init("9101405261972");
+    Multipayment.getToken({
+    cardno : cardno,
+    expire : expire,
+    securitycode : securitycode,
+    holdername : holdername,
+    tokennumber : tokennumber
+    }, execPurchase);
+}
+</script>
+<!-- Footer -->
+{{ include('/entry/footer.twig') }}
