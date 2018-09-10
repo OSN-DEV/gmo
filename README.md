@@ -1,4 +1,4 @@
-#GMO CREDITCARD API Library プロトコル・タイプ  
+# GMO CREDITCARD API Library プロトコル・タイプ  
 
 Overview  
 php library  
