@@ -1,100 +1,100 @@
 <?php
+class Gmo
+{
+    private $SiteID;
+    private $SitePass;
+    private $ShopID;
+    private $ShopPass;
+    private $EntryTran;
+    private $ExecTran;
+    private $AlterTran;
+    private $TdVerify;
+    private $ChangeTran;
+    private $SaveCard;
+    private $DeleteCard;
+    private $SearchCard;
+    private $TradedCard;
+    private $SaveMember;
+    private $DeleteMember;
+    private $SearchMember;
+    private $UpdateMember;
+    private $SearchTrade;
 
-class Gmo {
-    private $SiteID;       
-    private $SitePass;     
-    private $ShopID;       
-    private $ShopPass;     
-    private $EntryTran;    
-    private $ExecTran;     
-    private $AlterTran;    
-    private $TdVerify;     
-    private $ChangeTran;   
-    private $SaveCard;     
-    private $DeleteCard;   
-    private $SearchCard;   
-    private $TradedCard;   
-    private $SaveMember;   
-    private $DeleteMember; 
-    private $SearchMember; 
-    private $UpdateMember; 
-    private $SearchTrade;  
-    
-    public function __construct($conf)
+    public function __construct($config)
     {
-        $this->SiteID        =  $conf['SiteID'];      
-        $this->SitePass      =  $conf['SitePass'];
-        $this->ShopID        =  $conf['ShopID'];
-        $this->ShopPass      =  $conf['ShopPass'];
-        $this->EntryTran     =  $conf['EntryTran'];
-        $this->ExecTran      =  $conf['ExecTran'];
-        $this->AlterTran     =  $conf['AlterTran'];
-        $this->TdVerify      =  $conf['TdVerify'];
-        $this->ChangeTran    =  $conf['ChangeTran'];
-        $this->SaveCard      =  $conf['SaveCard'];
-        $this->DeleteCard    =  $conf['DeleteCard'];
-        $this->SearchCard    =  $conf['SearchCard'];
-        $this->TradedCard    =  $conf['TradedCard'];
-        $this->SaveMember    =  $conf['SaveMember'];
-        $this->DeleteMember  =  $conf['DeleteMember'];
-        $this->SearchMember  =  $conf['SearchMember'];
-        $this->UpdateMember  =  $conf['UpdateMember'];
-        $this->SearchTrade   =  $conf['SearchTrade'];
+        $this->SiteID = $config['SITEID'];
+        $this->SitePass = $config['SITEPASS'];
+        $this->ShopID = $config['SHOPID'];
+        $this->ShopPass = $config['SHOPPASS'];
+        $this->EntryTran = $config['ENTRYTRAN'];
+        $this->ExecTran = $config['EXECTRAN'];
+        $this->AlterTran = $config['ALTERTRAN'];
+        $this->TdVerify = $config['TDVERIFY'];
+        $this->ChangeTran = $config['CHANGETRAN'];
+        $this->SaveCard = $config['SAVECARD'];
+        $this->DeleteCard = $config['DELETECARD'];
+        $this->SearchCard = $config['SEARCHCARD'];
+        $this->TradedCard = $config['TRADEDCARD'];
+        $this->SaveMember = $config['SAVEMEMBER'];
+        $this->DeleteMember = $config['DELETEMEMBER'];
+        $this->SearchMember = $config['SEARCHMEMBER'];
+        $this->UpdateMember = $config['UPDATEMEMBER'];
+        $this->SearchTrade = $config['SEARCHTRADE'];
     }
 
     //GMO会員登録
-    public function SaveMember($MemberID,$MemberName)
+    public function SaveMember($MemberID, $MemberName)
     {
 
         $url = $this->SaveMember;
-        
+
         $data = [
-                'SiteID'    => $this->SiteID,
-                'SitePass'  => $this->SitePass,
-                'MemberID'  => $MemberID
-                ];
-        
-        $result = $this->curlData($url,$data);
-        
+            'SiteID' => $this->SiteID,
+            'SitePass' => $this->SitePass,
+            'MemberID' => $MemberID
+        ];
+
+        $result = $this->curlData($url, $data);
+
         return $result;
 
     }
 
     //カード登録／更新 
-    public function SaveCard($Token,$MemberID)
+    public function SaveCard($Token, $MemberID)
     {
 
         $url = $this->SaveCard;
         $data = [
-            'SiteID'        => $this->SiteID,
-            'SitePass'      => $this->SitePass,
-            'Token'         => $Token,
-            'DefaultFlag'   => 1,
-            'MemberID'      => $MemberID
-            ];
-        
-        $result = $this->curlData($url,$data);
-        
+            'SiteID' => $this->SiteID,
+            'SitePass' => $this->SitePass,
+            'Token' => $Token,
+            'DefaultFlag' => 1,
+            'MemberID' => $MemberID
+        ];
+
+        $result = $this->curlData($url, $data);
+
         return $result;
 
     }
 
     //カード更新
-    public function UpdateCard($Token,$MemberID)
+    public function UpdateCard($Token, $MemberID)
     {
 
         $url = $this->SaveCard;
         $data = [
-            'SiteID'        => $this->SiteID,
-            'SitePass'      => $this->SitePass,
-            'Token'         => $Token,
-            'MemberID'      => $MemberID,
-            'DefaultFlag'   => 1,
-            'CardSeq'       => 0
-            ];
-        
-        $result = $this->curlData($url,$data);
-        
+            'SiteID' => $this->SiteID,
+            'SitePass' => $this->SitePass,
+            'Token' => $Token,
+            'MemberID' => $MemberID,
+            'DefaultFlag' => 1,
+            'CardSeq' => 0
+        ];
+
+        $result = $this->curlData($url, $data);
+
         return $result;
 
     }
@@ -102,34 +102,34 @@ class Gmo {
     //カード削除 
     public function DeleteCard($MemberID)
     {
-        
+
         $url = $this->DeleteCard;
         $data = [
-            'SiteID'    => $this->SiteID,
-            'SitePass'  => $this->SitePass,
-            'MemberID'  => $MemberID,
-            'CardSeq'   => 0
-            ];
-        
-        $result = $this->curlData($url,$data);
-        
+            'SiteID' => $this->SiteID,
+            'SitePass' => $this->SitePass,
+            'MemberID' => $MemberID,
+            'CardSeq' => 0
+        ];
+
+        $result = $this->curlData($url, $data);
+
         return $result;
 
     }
 
-    public function Entry($OrderID,$Amount)
+    public function Entry($OrderID, $Amount)
     {
         $url = $this->EntryTran;
 
         $data = [
-            'ShopID'    => $this->ShopID,
-            'ShopPass'  => $this->ShopPass,
-            'OrderID'   => $OrderID,
-            'JobCd'     => 'CAPTURE',
-            'Amount'    => $Amount,
+            'ShopID' => $this->ShopID,
+            'ShopPass' => $this->ShopPass,
+            'OrderID' => $OrderID,
+            'JobCd' => 'CAPTURE',
+            'Amount' => $Amount,
         ];
 
-        $result = $this->curlData($url,$data);
+        $result = $this->curlData($url, $data);
 
         return $result;
 
@@ -140,82 +140,79 @@ class Gmo {
         $url = $this->SearchCard;
 
         $data = [
-            'SiteID'    => $this->SiteID,
-            'SitePass'  => $this->SitePass,
-            'MemberID'  => $MemberID,
-            'SeqMode'   => 0
+            'SiteID' => $this->SiteID,
+            'SitePass' => $this->SitePass,
+            'MemberID' => $MemberID,
+            'SeqMode' => 0
         ];
 
-        $result = $this->curlData($url,$data);
+        $result = $this->curlData($url, $data);
 
         return $result;
 
     }
 
-    public function Exec($AccessID,$AccessPass,$OrderID,$MemberID,$CardSeq)
+    public function Exec($AccessID, $AccessPass, $OrderID, $MemberID, $CardSeq)
     {
         $url = $this->ExecTran;
 
         $data = [
-            'SiteID'        => $this->SiteID,
-            'SitePass'      => $this->SitePass,
-            'AccessID'      => $AccessID,
-            'AccessPass'    => $AccessPass,
-            'OrderID'       => $OrderID,
-            'Method'        => 1,
-            'MemberID'      => $MemberID,
-            'CardSeq'       => $CardSeq,
+            'SiteID' => $this->SiteID,
+            'SitePass' => $this->SitePass,
+            'AccessID' => $AccessID,
+            'AccessPass' => $AccessPass,
+            'OrderID' => $OrderID,
+            'Method' => 1,
+            'MemberID' => $MemberID,
+            'CardSeq' => $CardSeq,
         ];
 
-        $result = $this->curlData($url,$data);
+        $result = $this->curlData($url, $data);
 
         return $result;
 
     }
-    
-    public function ExecByMemberID($MemberID,$OrderID,$Amount)
+
+    public function ExecByMemberID($MemberID, $OrderID, $Amount)
     {
-        $result_entry = $this->Entry($OrderID,$Amount);
-        if($result_entry['ErrInfo'])
-        {
-            $result['error'] = 1; 
-            $result['alert'] = '"Error'.$result_entry['ErrInfo'].'","取引登録失敗！'.$this->getErrMsg($result_entry['ErrInfo']).'","error"';
-            
+        $result_entry = $this->Entry($OrderID, $Amount);
+        if ($result_entry['ErrInfo']) {
+            $result['error'] = 1;
+            $result['alert'] = '"Error' . $result_entry['ErrInfo'] . '","取引登録失敗！' . $this->getErrMsg($result_entry['ErrInfo']) . '","error"';
+
             return $result;
         }
         $AccessID = $result_entry['AccessID'];
         $AccessPass = $result_entry['AccessPass'];
 
         $result_search = $this->SearchCards($MemberID);
-        if($result_search['ErrInfo'])
-        {
-            $result['error'] = 1; 
-            $result['alert'] = '"Error'.$result_search['ErrInfo'].'","カード参照失敗！'.$this->getErrMsg($result_search['ErrInfo']).'","error"';
-            
+        if ($result_search['ErrInfo']) {
+            $result['error'] = 1;
+            $result['alert'] = '"Error' . $result_search['ErrInfo'] . '","カード参照失敗！' . $this->getErrMsg($result_search['ErrInfo']) . '","error"';
+
             return $result;
         }
 
-        if( strlen($result_search['DefaultFlag']) > 1 )
-        {
-            $array = explode('|',$result_search['CardSeq']);
-            $key = array_search('1',explode('|',$result_search['DefaultFlag']));    
+        if (strlen($result_search['DefaultFlag']) > 1) {
+            $array = explode('|', $result_search['CardSeq']);
+            $key = array_search('1', explode('|', $result_search['DefaultFlag']));
             $CardSeq = $array[$key];
         }
 
-        if( strlen($result_search['DefaultFlag']) == '1' ){
+        if (strlen($result_search['DefaultFlag']) == '1') {
             $key = 1;
             $CardSeq = $result_search['CardSeq'];
         }
 
-        if(!$key){
-            $result['error'] = 1; 
+        if (!$key) {
+            $result['error'] = 1;
             $result['alert'] = '"Error","デフォルトフラグが見つかりません。","error"';
-            return $result;            
+            return $result;
         }
 
-        $result = $this->Exec($AccessID,$AccessPass,$OrderID,$MemberID,$CardSeq);
-        if(!$result){
-            $result['error'] = 1; 
+        $result = $this->Exec($AccessID, $AccessPass, $OrderID, $MemberID, $CardSeq);
+        if (!$result) {
+            $result['error'] = 1;
             $result['alert'] = '"Error","請求失敗！","error"';
         }
 
@@ -223,24 +220,24 @@ class Gmo {
 
     }
 
-    public function curlData($url,$data)
+    public function curlData($url, $data)
     {
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
 
-       if(! $result = curl_exec($ch) ){
-           echo curl_error($ch);
-       }
+        if (!$result = curl_exec($ch)) {
+            echo curl_error($ch);
+        }
 
         curl_close($ch);
-        parse_str($result,$array); 
+        parse_str($result, $array);
 
-        return $array;     
+        return $array;
     }
 
     public function getErrMsg($ErrInfo)
@@ -355,7 +352,7 @@ class Gmo {
             '42G050000' => 'カード限度額を超えているために、決済が完了できませんでした。',
             '42G120000' => 'このカードでは取引をする事が出来ません。',
             '42G220000' => 'このカードでは取引をする事が出来ません。',
-            '42G300000' =>  '',
+            '42G300000' => '',
             '42G420000' => '暗証番号が誤っていた為に、決済を完了する事が出来ませんでした。',
             '42G540000' => 'このカードでは取引をする事が出来ません。',
             '42G550000' => 'カード限度額を超えているために、決済が完了できませんでした。',
@@ -386,13 +383,12 @@ class Gmo {
             '42G990000' => 'このカードでは取引をする事が出来ません。',
         ];
 
-        if( $err[$ErrInfo] )
-        {
+        if ($err[$ErrInfo]) {
             $result = $err[$ErrInfo];
-        }else{
+        } else {
             $result = '該当エラーコードがありません。';
         }
-        
+
         return $result;
     }
 
